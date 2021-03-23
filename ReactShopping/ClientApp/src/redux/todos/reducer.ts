@@ -51,8 +51,6 @@ const initialTodosState = {
 };
 
 export function todos(state = initialTodosState, action) {
-  console.log(action);
-  //console.log(state);
   switch (action.type) {
     case GET_ALL_ITEMS_REQUEST:
       return { ...state, loading: true, tab: "all" };

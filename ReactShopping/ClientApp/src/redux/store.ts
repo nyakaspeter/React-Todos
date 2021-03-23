@@ -5,6 +5,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { persistStore, persistReducer, createTransform } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import logger from "redux-logger";
 
 // Transform dates back into JS Dates on rehydrate
 // (see: https://github.com/rt2zz/redux-persist/issues/82)
@@ -31,9 +32,11 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+const middlewares = [thunk, logger];
+
 export const store = createStore(
   persistedReducer,
-  composeWithDevTools(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(...middlewares))
 );
 
 export const persistor = persistStore(store);
