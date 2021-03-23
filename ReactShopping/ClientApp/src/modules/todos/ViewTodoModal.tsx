@@ -1,7 +1,7 @@
 import "./todos.scss";
 import * as React from "react";
 import { Button, Modal, Form } from "react-bootstrap";
-import { showEditModal, hideTodoModal } from "../../redux/todos/actions";
+import { showEditModal, hideTodoModal } from "../../redux/todos/todosSlice";
 import { connect, useSelector, useDispatch } from "react-redux";
 
 export default function ViewTodoModal(props) {

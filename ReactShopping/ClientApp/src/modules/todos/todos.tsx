@@ -1,26 +1,15 @@
 import "./todos.scss";
 import * as React from "react";
-import { Todo, TodosClient } from "../../api/app.generated";
-import { Button, Modal, Form } from "react-bootstrap";
-import DatePicker from "react-datepicker";
+import { Button } from "react-bootstrap";
 import {
   getAllItems,
   getTodoItems,
   getTodaysItems,
-  showTodoModal,
-  showNewModal,
-  hideNewModal,
-  hideTodoModal,
-  showEditModal,
-  hideEditModal,
   toggleItem,
   deleteItem,
-  handleTitleChange,
-  handleDescriptionChange,
-  handleDeadlineChange,
-  addItem,
-  editItem
-} from "../../redux/todos/actions";
+  showNewModal,
+  showTodoModal
+} from "../../redux/todos/todosSlice";
 import { connect } from "react-redux";
 import NewTodoModal from "./NewTodoModal";
 import ViewTodoModal from "./ViewTodoModal";
@@ -46,23 +35,14 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getAllItems: () => dispatch(getAllItems()),
-    getTodoItems: () => dispatch(getTodoItems()),
-    getTodaysItems: () => dispatch(getTodaysItems()),
-    showNewModal: () => dispatch(showNewModal()),
-    hideNewModal: () => dispatch(hideNewModal()),
-    showTodoModal: id => dispatch(showTodoModal(id)),
-    hideTodoModal: () => dispatch(hideTodoModal()),
-    showEditModal: () => dispatch(showEditModal()),
-    hideEditModal: () => dispatch(hideEditModal()),
-    toggleItem: id => dispatch(toggleItem(id)),
-    deleteItem: id => dispatch(deleteItem(id)),
-    handleTitleChange: value => dispatch(handleTitleChange(value)),
-    handleDescriptionChange: value => dispatch(handleDescriptionChange(value)),
-    handleDeadlineChange: value => dispatch(handleDeadlineChange(value))
-  };
+const mapDispatch = {
+  getAllItems,
+  getTodoItems,
+  getTodaysItems,
+  toggleItem,
+  deleteItem,
+  showNewModal,
+  showTodoModal
 };
 
 function Todos(props) {
@@ -141,4 +121,4 @@ function Todos(props) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Todos);
+export default connect(mapStateToProps, mapDispatch)(Todos);

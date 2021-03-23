@@ -9,10 +9,9 @@ import {
   handleTitleChange,
   handleDescriptionChange,
   handleDeadlineChange,
-  addItem,
   hideEditModal,
   editItem
-} from "../../redux/todos/actions";
+} from "../../redux/todos/todosSlice";
 import { connect } from "react-redux";
 
 const mapStateToProps = state => {

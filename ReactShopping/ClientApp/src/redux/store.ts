@@ -1,6 +1,8 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { users } from "./users/reducer";
-import { todos } from "./todos/reducer";
+//import { todos } from "./todos/reducer";
+import todosReducer from "./todos/todosSlice";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { persistStore, persistReducer, createTransform } from "redux-persist";
@@ -27,17 +29,17 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   users,
-  todos
+  todos: todosReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middlewares = [thunk, logger];
 
-export const store = createStore(
-  persistedReducer,
-  composeWithDevTools(applyMiddleware(...middlewares))
-);
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: [thunk, logger]
+});
 
 export const persistor = persistStore(store);
 

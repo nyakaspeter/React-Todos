@@ -2,15 +2,7 @@ import "./todos.scss";
 import * as React from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import {
-  showNewModal,
-  hideNewModal,
-  showEditModal,
-  handleTitleChange,
-  handleDescriptionChange,
-  handleDeadlineChange,
-  addItem
-} from "../../redux/todos/actions";
+import { hideNewModal, addItem } from "../../redux/todos/todosSlice";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 
