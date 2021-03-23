@@ -26,6 +26,7 @@ import NewTodoModal from "./NewTodoModal";
 import ViewTodoModal from "./ViewTodoModal";
 import EditTodoModal from "./EditTodoModal";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const mapStateToProps = state => {
   return {
@@ -118,7 +119,8 @@ function Todos(props) {
               defaultChecked={todo.isDone}
               onChange={e => props.toggleItem(todo.id)}
             />
-            {"  " + todo.title}
+            {"  "}
+            <Link to={`/todos/id/${todo.id}`}>{todo.title}</Link>
             <span className="float-right">
               <Button size="sm" onClick={e => props.showTodoModal(todo.id)}>
                 Details
