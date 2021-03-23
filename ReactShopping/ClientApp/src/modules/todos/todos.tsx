@@ -25,6 +25,7 @@ import { connect } from "react-redux";
 import NewTodoModal from "./NewTodoModal";
 import ViewTodoModal from "./ViewTodoModal";
 import EditTodoModal from "./EditTodoModal";
+import { useEffect } from "react";
 
 const mapStateToProps = state => {
   return {
@@ -59,13 +60,15 @@ const mapDispatchToProps = dispatch => {
     deleteItem: id => dispatch(deleteItem(id)),
     handleTitleChange: value => dispatch(handleTitleChange(value)),
     handleDescriptionChange: value => dispatch(handleDescriptionChange(value)),
-    handleDeadlineChange: value => dispatch(handleDeadlineChange(value)),
-    addItem: () => dispatch(addItem()),
-    editItem: () => dispatch(editItem())
+    handleDeadlineChange: value => dispatch(handleDeadlineChange(value))
   };
 };
 
 function Todos(props) {
+  useEffect(() => {
+    props.getAllItems();
+  }, []);
+
   return (
     <div>
       <span className="btn-group m-2" role="group" aria-label="Basic example">

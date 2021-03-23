@@ -236,22 +236,17 @@ export const deleteItem = id => {
   };
 };
 
-export const addItem = () => {
+export const addItem = item => {
   return function(dispatch, getState) {
-    const {
-      titleInput,
-      descriptionInput,
-      deadlineInput,
-      tab
-    } = getState().todos;
+    const { tab } = getState().todos;
     dispatch(addItemRequest());
     client
       .addTodo(
         undefined,
-        titleInput,
-        descriptionInput,
+        item.title,
+        item.description,
         false,
-        deadlineInput == null ? new Date() : deadlineInput
+        item.deadline ? item.deadline : new Date()
       )
       .then(() => {
         dispatch(addItemSuccess());

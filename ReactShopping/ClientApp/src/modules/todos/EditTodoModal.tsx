@@ -33,7 +33,6 @@ const mapDispatchToProps = dispatch => {
     handleTitleChange: value => dispatch(handleTitleChange(value)),
     handleDescriptionChange: value => dispatch(handleDescriptionChange(value)),
     handleDeadlineChange: value => dispatch(handleDeadlineChange(value)),
-    addItem: () => dispatch(addItem()),
     editItem: () => dispatch(editItem())
   };
 };

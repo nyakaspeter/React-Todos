@@ -11,84 +11,65 @@ import {
   handleDeadlineChange,
   addItem
 } from "../../redux/todos/actions";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { useForm, Controller } from "react-hook-form";
 
-const mapStateToProps = state => {
-  return {
-    tab: state.todos.tab,
-    todos: state.todos.todos,
-    showNew: state.todos.showNew,
-    titleInput: state.todos.titleInput,
-    descriptionInput: state.todos.descriptionInput,
-    deadlineInput: state.todos.deadlineInput,
-    showTodo: state.todos.showTodo,
-    todoId: state.todos.todoId,
-    todoTitle: state.todos.todoTitle,
-    todoDescription: state.todos.todoDescription,
-    todoDone: state.todos.todoDone,
-    todoDeadline: state.todos.todoDeadline,
-    showEdit: state.todos.showEdit
+export default function NewTodoModal(props) {
+  const dispatch = useDispatch();
+  const show = useSelector((state: any) => state.todos.showNew);
+  const { control, register, handleSubmit, watch } = useForm();
+  const onSubmit = data => {
+    dispatch(addItem(data));
   };
-};
 
-const mapDispatchToProps = dispatch => {
-  return {
-    showNewModal: () => dispatch(showNewModal()),
-    hideNewModal: () => dispatch(hideNewModal()),
-    showEditModal: () => dispatch(showEditModal()),
-    handleTitleChange: value => dispatch(handleTitleChange(value)),
-    handleDescriptionChange: value => dispatch(handleDescriptionChange(value)),
-    handleDeadlineChange: value => dispatch(handleDeadlineChange(value)),
-    addItem: () => dispatch(addItem())
-  };
-};
-
-function NewTodoModal(props) {
   return (
-    <Modal show={props.showNew} onHide={props.hideNewModal}>
+    <Modal show={show} onHide={() => dispatch(hideNewModal())}>
       <Modal.Header closeButton>
         <Modal.Title>New to-do</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Form.Control
+            ref={register}
+            name="title"
             type="text"
             placeholder="Title"
-            value={props.titleInput}
-            onChange={props.handleTitleChange}
           />
           <br />
           <Form.Control
+            ref={register}
+            name="description"
             as="textarea"
             placeholder="Description"
             rows="2"
-            value={props.descriptionInput}
-            onChange={props.handleDescriptionChange}
           />
           <br />
-          <DatePicker
-            className="form-control"
-            placeholderText="Deadline"
-            selected={props.deadlineInput}
-            onChange={date => props.handleDeadlineChange(date)}
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={1}
-            timeCaption="Time"
-            dateFormat="yyyy. MM. dd. HH:mm"
+          <Controller
+            as={
+              <DatePicker
+                className="form-control"
+                placeholderText="Deadline"
+                selected={watch("deadline")}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={1}
+                timeCaption="Time"
+                dateFormat="yyyy. MM. dd. HH:mm"
+              />
+            }
+            name="deadline"
+            control={control}
           />
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.hideNewModal}>
+        <Button variant="secondary" onClick={() => dispatch(hideNewModal())}>
           Cancel
         </Button>
-        <Button variant="success" onClick={props.addItem}>
+        <Button variant="success" onClick={handleSubmit(onSubmit)}>
           Add
         </Button>
       </Modal.Footer>
     </Modal>
   );
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewTodoModal);
