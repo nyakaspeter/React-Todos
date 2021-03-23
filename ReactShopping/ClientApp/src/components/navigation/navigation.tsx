@@ -86,6 +86,16 @@ class NavigationComponent extends React.Component<
                 {Resources.Navigation.Dashboard}
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink
+                exact
+                activeClassName="active"
+                className="nav-link"
+                to="/todos"
+              >
+                Todos
+              </NavLink>
+            </li>
           </ul>
         </div>
         {this.props.isAuthed && (

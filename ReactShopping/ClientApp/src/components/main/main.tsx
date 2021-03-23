@@ -15,30 +15,32 @@ interface IMainContainerProps {
   checkAuthentication: boolean;
 }
 
-const MainContainer: React.StatelessComponent<IMainContainerProps> = (props) => {
+const MainContainer: React.StatelessComponent<IMainContainerProps> = props => {
   const { component: Component, ...rest } = props;
-  return <Route {...rest} render={matchProps =>
-    (props.checkAuthentication && !props.isAuthed) ?
-      (
-        <Redirect to="/login" />
-      ) :
-      (
-        <div className="wrapper">
-          <Navigation history={matchProps.history} />
-          <Component {...matchProps} />
-          <div className="push"></div>
-          <Footer />
-        </div>
-      )
-  } />
-}
+  return (
+    <Route
+      {...rest}
+      render={matchProps =>
+        props.checkAuthentication && !props.isAuthed ? (
+          <Redirect to="/login" />
+        ) : (
+          <div className="wrapper">
+            <Navigation history={matchProps.history} />
+            <Component {...matchProps} />
+            <div className="push"></div>
+          </div>
+        )
+      }
+    />
+  );
+};
 
 export const Main = connect(
   (state: AppState) => {
-    return ({ 
-      isAuthed: state.users.isAuthed 
-    });
+    return {
+      isAuthed: state.users.isAuthed
+    };
   },
 
-  (dispatch) => bindActionCreators(userActionCreators, dispatch)
+  dispatch => bindActionCreators(userActionCreators, dispatch)
 )(MainContainer);

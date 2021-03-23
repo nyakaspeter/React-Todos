@@ -1,93 +1,92 @@
-
 var webpack = require("webpack");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var path = require("path");
 
 module.exports = {
-    entry: "./src/index.tsx",
-    output: {
-        filename: "bundle-dev.js",
-        path: path.resolve(__dirname, "..", "public"),
-        publicPath: "/"
-    },
-    resolve: {
-        extensions: [".tsx", ".ts", ".js", ".json", ".html"],
-        modules: ["node_modules", path.resolve(__dirname, "..", "src")]
-    },
-    resolveLoader: {
-        modules: ["node_modules"]
-    },
-    devServer: {
-        inline: true,
-        contentBase: "public/",
-        port: 3001,
-        proxy: [
-            {
-                path: "/api/*",
-                target: "http://localhost:5000/"
-            }
-        ],
-        historyApiFallback: true
-    },
-    devtool: "source-map",
-    module: {
-        rules: [
-            {  
-                test: /\.ts(x?)$/, 
-                loader: "ts-loader",
-                exclude: /node_modules/
-            },
-            { 
-                enforce: "pre", 
-                test: /\.js$/, 
-                loader: "source-map-loader" 
-            },
-            {
-                test: /\.css$/,
-                exclude: [/\.useable\.css$/, /\.normalize\.css$/],
-                loader: "style-loader!css-loader"
-            },
-            {
-                test: /\.useable\.css$/,
-                loader: "style-loader/useable!css"
-            },
-            {
-                test: /\.scss$/,
-                loader: 'style-loader!css-loader!sass-loader'
-            },
-            {
-                test: /bootstrap\/js\//,
-                loader: 'imports-loader?jQuery=jquery'
-            },
-            {
-                test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
-                loader: 'imports-loader?jQuery=jquery'
-            },
-            {
-                test: /\.html$/,
-                exclude: /node_modules/,
-                loader: 'html-loader'
-            },
-            {
-                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'url-loader?limit=10000&mimetype=application/font-woff'
-            },
-            {
-                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'file-loader'
-            }
-        ]
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-          template: "src/index.html",
-          hash: true
-        }),
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery',
-            'window.jquery': 'jquery'
-        })
+  entry: "./src/index.tsx",
+  output: {
+    filename: "bundle-dev.js",
+    path: path.resolve(__dirname, "..", "public"),
+    publicPath: "/"
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js", ".json", ".html"],
+    modules: ["node_modules", path.resolve(__dirname, "..", "src")]
+  },
+  resolveLoader: {
+    modules: ["node_modules"]
+  },
+  devServer: {
+    inline: true,
+    contentBase: "public/",
+    port: 3001,
+    proxy: [
+      {
+        path: "/api/*",
+        target: "http://localhost:5000/"
+      }
+    ],
+    historyApiFallback: true
+  },
+  devtool: "source-map",
+  module: {
+    rules: [
+      {
+        test: /\.ts(x?)$/,
+        loader: "ts-loader",
+        exclude: /node_modules/
+      },
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        loader: "source-map-loader"
+      },
+      {
+        test: /\.css$/,
+        exclude: [/\.useable\.css$/, /\.normalize\.css$/],
+        loader: "style-loader!css-loader"
+      },
+      {
+        test: /\.useable\.css$/,
+        loader: "style-loader/useable!css"
+      },
+      {
+        test: /\.scss$/,
+        loader: "style-loader!css-loader!sass-loader"
+      },
+      {
+        test: /bootstrap\/js\//,
+        loader: "imports-loader?jQuery=jquery"
+      },
+      {
+        test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
+        loader: "imports-loader?jQuery=jquery"
+      },
+      {
+        test: /\.html$/,
+        exclude: /node_modules/,
+        loader: "html-loader"
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "url-loader?limit=10000&mimetype=application/font-woff"
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader"
+      }
     ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "src/index.html",
+      hash: true
+    }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery",
+      "window.jquery": "jquery"
+    })
+  ]
 };
