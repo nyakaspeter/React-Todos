@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { Main, NotFound } from "..";
 import { Home, Dashboard, Login } from "../../modules";
-import { Todos } from "../../modules/todos/todos";
+import Todos from "../../modules/todos/todos";
 
 export class Routes extends React.Component {
   render() {
